@@ -25,7 +25,14 @@ Currently learning:
 * Maven
 ## Skills
 ## Certificates
+* Testing Academy Certificate from testuj.pl
+* Backend Testing School Certificate from akademiaqa.pl
+* ISTQB FL - ID 18684/CTFL/2022
 ## Books
+* Certyfikowany tester ISTQB - Adam Roman, Lucjan Stapp
+* Podróż przez Świat Testowania - Natalia Pawlak, Karolina Pawłowska
 ## Recommended Blogs
+* Testowa Środa
+* 
 # My Postman Collections
 # My Test Cases and Bug Reports
