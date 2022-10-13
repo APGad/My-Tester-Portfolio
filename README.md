@@ -23,7 +23,7 @@ Currently learning:
 * JAVA
 * IntelliJ
 * Maven
-## Skills
+
 ## Certificates
 * Testing Academy Certificate from testuj.pl
 * Backend Testing School Certificate from akademiaqa.pl
@@ -34,6 +34,6 @@ Currently learning:
 ## Recommended Blogs
 * Testowa Środa
 * WyszkoleWas.com.pl
-* 
+
 # My Postman Collections
 # My Test Cases and Bug Reports
