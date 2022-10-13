@@ -33,6 +33,7 @@ Currently learning:
 * Podróż przez Świat Testowania - Natalia Pawlak, Karolina Pawłowska
 ## Recommended Blogs
 * Testowa Środa
+* WyszkoleWas.com.pl
 * 
 # My Postman Collections
 # My Test Cases and Bug Reports
