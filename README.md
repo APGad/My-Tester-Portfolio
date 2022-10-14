@@ -32,9 +32,9 @@ Currently learning:
 * Certyfikowany tester ISTQB - Adam Roman, Lucjan Stapp
 * Podróż przez Świat Testowania - Natalia Pawlak, Karolina Pawłowska
 ## Recommended Blogs
-* Testowa Środa
-* WyszkoleWas.com.pl
+* Testowa Środa -  https://akademiaqa.pl/testowa-sroda/
+* "Wyszkolę Was" - Blog Waldemara Szafrańca - www.WyszkoleWas.com.pl
 
-# My Postman Collections
-# My Test Cases and Bug Reports
+# My Postman Collections (in progress)
+# My Test Cases and Bug Reports (in progress)
 Test cases for www.reverb.com: https://docs.google.com/spreadsheets/d/16NTwscRPnEWSp6wNos3CAsktZbrzsOJOldoJ0DAljKE/edit?usp=sharing
