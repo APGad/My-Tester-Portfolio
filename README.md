@@ -34,6 +34,8 @@ Currently learning:
 ## Recommended Blogs
 * Testowa Środa -  https://akademiaqa.pl/testowa-sroda/
 * "Wyszkolę Was" - Blog Waldemara Szafrańca - www.WyszkoleWas.com.pl
+* www.testerzy.pl
+* TestITka - https://www.youtube.com/c/TestITka
 
 # My Postman Collections (in progress)
 * AirportGap Api 
