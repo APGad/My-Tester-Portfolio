@@ -37,7 +37,7 @@ Currently learning:
 
 # My Postman Collections (in progress)
 * AirportGap Api 
-https://drive.google.com/file/d/1J4vGdwpGKPvrjUicHx-oZAXSRfjElTEo/view?usp=sharing
-https://drive.google.com/file/d/12H6yTjf9fTvqscgrETSn4x-mu4ueTbbm/view?usp=sharing
+  * Newman html report - download and view in browser https://drive.google.com/file/d/1J4vGdwpGKPvrjUicHx-oZAXSRfjElTEo/view?usp=sharing
+  * JSON collection https://drive.google.com/file/d/12H6yTjf9fTvqscgrETSn4x-mu4ueTbbm/view?usp=sharing
 # My Test Cases and Bug Reports (in progress)
 Test cases for www.reverb.com: https://docs.google.com/spreadsheets/d/16NTwscRPnEWSp6wNos3CAsktZbrzsOJOldoJ0DAljKE/edit?usp=sharing
