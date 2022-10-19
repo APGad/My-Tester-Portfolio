@@ -1,0 +1,617 @@
+{
+	"info": {
+		"_postman_id": "6309de19-e85b-47d7-aec9-0895f1109d88",
+		"name": "AirportGap - API automation portfolio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21370936"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Get all Airports",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('randIndFav', Math.floor(Math.random() * 20))\r",
+									"\r",
+									"pm.collectionVariables.set('randomIndex', Math.floor(Math.random() * 20));\r",
+									"\r",
+									"// pm.collectionVariables.set('randomIndexFrom', Math.floor(Math.random() * 10));\r",
+									"\r",
+									"// pm.collectionVariables.set('randomIndexTo', Math.floor(Math.random() * 20));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Should verify response status\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return non empty response\", () => {\r",
+									"    pm.expect(json).to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return response header Content-Type application/json; charset=utf-8\", () => {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.equal('application/json; charset=utf-8');\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set('favAirportID', json.data[pm.collectionVariables.get('randIndFav')].id);\r",
+									"\r",
+									"pm.collectionVariables.set('airportID', json.data[pm.collectionVariables.get('randomIndex')].id);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/airports",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns the API token for your Airport Gap account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should verify response status\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set('token', json.token);\r",
+									"\r",
+									"pm.test(\"Should return non empty response\", () => {\r",
+									"    pm.expect(json).to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return json response\", () => {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@airportgap.com\",\r\n    \"password\": \"airportgappassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/tokens",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save a favorite airport",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomNote = pm.variables.replaceIn('{{$randomLoremSentence}}');\r",
+									"pm.collectionVariables.set(\"cRandNote\", randomNote);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should verify response status\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Should verify airport ID\", () => {\r",
+									"    pm.expect(json.data.attributes.airport.iata).to.eql(pm.collectionVariables.get('favAirportID'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should verify correct note\", () => {\r",
+									"    pm.expect(json.data.attributes.note).to.eql(pm.collectionVariables.get('cRandNote'));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"airport_id\": \"{{favAirportID}}\",\r\n    \"note\": \"{{cRandNote}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/favorites",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"favorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Calculates the distance between two airports",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Should return data type - airport distance\", () => {\r",
+									"    pm.expect(json.data.type).to.include(\"airport_distance\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/airports/distance?from={{favAirportID}}&to={{airportID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"airports",
+								"distance"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "{{favAirportID}}"
+								},
+								{
+									"key": "to",
+									"value": "{{airportID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Get one Airport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should verify response status\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Should verify airport ID\", () => {\r",
+									"    pm.expect(json.data.id).to.eql(pm.collectionVariables.get('airportID'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return a non empty response\", () => {\r",
+									"    pm.response.to.not.be.empty\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/airports/{{airportID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"airports",
+								"{{airportID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all the favorite airports saved to your Airport Gap account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set('intFavAirID', json.data[0].id);\r",
+									"\r",
+									"pm.test(\"Should verify response status\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should verify response time\", () => {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/favorites",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"favorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get the favorite airport from your Airport Gap account specified by the ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Should return type - favorite\", function () {\r",
+									"    pm.expect(json.data.type).to.eql(\"favorite\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/favorites/{{intFavAirID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"favorites",
+								"{{intFavAirID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PATCH",
+			"item": [
+				{
+					"name": "Update the note of one of your favorite airports",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should verify response status\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Should verify updated note\", () => {\r",
+									"    pm.expect(json.data.attributes.note).to.equal(\"This is an updated note\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"note\": \"This is an updated note\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/favorites/{{intFavAirID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"favorites",
+								"{{intFavAirID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "Deletes one of your favorite airports",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should verify response status\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response must be Not Found\", () => {\r",
+									"     pm.response.to.be.withoutContent;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/favorites/{{intFavAirID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"favorites",
+								"{{intFavAirID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clears all of your favorite airports from your Airport Gap account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should verify response status\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response must be Not Found\", () => {\r",
+									"     pm.response.to.be.withoutContent;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/favorites/clear_all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"favorites",
+								"clear_all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "randomIndex",
+			"value": ""
+		},
+		{
+			"key": "randomIndexFrom",
+			"value": ""
+		},
+		{
+			"key": "randomIndexTo",
+			"value": ""
+		},
+		{
+			"key": "airportID",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "url",
+			"value": "https://airportgap.dev-tester.com/api",
+			"type": "string"
+		},
+		{
+			"key": "randIndFav",
+			"value": ""
+		},
+		{
+			"key": "favAirportID",
+			"value": ""
+		},
+		{
+			"key": "cRandNote",
+			"value": ""
+		},
+		{
+			"key": "intFavAirID",
+			"value": ""
+		}
+	]
+}
